@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">HXCodeCase</string>
+    <string name="button_text_movies">Movies</string>
+    <string name="button_text_music">Music</string>
+    <string name="button_text_apps">Apps</string>
+    <string name="button_text_books">Books</string>
+    <string name="hint_text_search">Search</string>
+    <string name="info_text_empty_list">Empty List!</string>
+</resources>
