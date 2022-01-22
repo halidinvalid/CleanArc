@@ -5,6 +5,6 @@ import com.hx.codecase.domain.model.ProductResponse
 
 interface LocalDataSource {
 
-    fun getCacheProducts(term: String?, limit: String?, media: String?): ProductResponse?
+   suspend fun getCacheProducts(term: String?, limit: String?, media: String?): ProductResponse?
 
 }

@@ -33,12 +33,12 @@ class ProductAdapter(private val onItemClickListener: ((ProductItem?) -> Unit)? 
     fun updateList(list: MutableList<ProductItem>) {
         val diffResult = DiffUtil.calculateDiff(ProductDiffUtil(oldProductList, list))
         diffResult.dispatchUpdatesTo(this)
+        oldProductList.clear()
         oldProductList = list
     }
 
     inner class ProductViewHolder(private val itemBinding: ItemProductListBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-
         fun bind(productItemData: ProductItem?) {
             itemBinding.apply {
                 productItemData?.let { productItem ->
