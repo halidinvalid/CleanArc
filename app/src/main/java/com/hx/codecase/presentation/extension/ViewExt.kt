@@ -2,6 +2,8 @@ package com.hx.codecase.presentation.extension
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,8 +55,17 @@ fun String.loadImage(
 fun String.formatDate(): String {
     val timeZone = ZonedDateTime.ofInstant(
         Instant.parse(this),
-        ZoneId.of("Europe/Paris")
+        ZoneId.of("Europe/Istanbul")
     )
     return timeZone.dayOfMonth.toString() + "-" + timeZone.monthValue + "-" + timeZone.year
+}
+
+inline fun <reified T : Any> Context.launchActivity(
+    bundle: Bundle? = null,
+    init: Intent.() -> Unit
+) {
+    val intent = Intent(this, T::class.java)
+    intent.init()
+    startActivity(intent, bundle)
 }
 

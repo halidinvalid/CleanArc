@@ -7,7 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-fun ViewModel.launchViewModelScope(scopeMethod: suspend CoroutineScope.() -> Unit) {
+inline fun ViewModel.launchViewModelScope(
+    crossinline scopeMethod: suspend CoroutineScope.() -> Unit
+) {
     viewModelScope.launch {
         withContext(Dispatchers.Default) {
             scopeMethod()

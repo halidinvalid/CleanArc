@@ -1,8 +1,5 @@
 package com.hx.codecase.feature
 
-import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,6 +8,7 @@ import com.hx.codecase.databinding.FragmentProductBinding
 import com.hx.codecase.domain.model.ProductItem
 import com.hx.codecase.presentation.base.BaseFragment
 import com.hx.codecase.presentation.entities.MediaType
+import com.hx.codecase.presentation.extension.launchActivity
 import com.hx.codecase.presentation.extension.observeResponse
 import com.hx.codecase.presentation.extension.setup
 import com.hx.codecase.presentation.navigation.UiNavigation
@@ -24,13 +22,12 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
 
     private val productAdapter by lazy {
         ProductAdapter(onItemClickListener = {
-            startActivity(
-                Intent(context, ProductDetailActivity::class.java)
-                    .putExtra(ProductDetailActivity.BUNDLE_PRODUCT_IMAGE, it?.artworkUrl100)
-                    .putExtra(ProductDetailActivity.BUNDLE_PRODUCT_NAME, it?.collectionName)
-                    .putExtra(ProductDetailActivity.BUNDLE_PRODUCT_PRICE, it?.collectionPrice)
-                    .putExtra(ProductDetailActivity.BUNDLE_PRODUCT_RELEASE_DATE, it?.releaseDate)
-            )
+            context?.launchActivity<ProductDetailActivity> {
+                putExtra(ProductDetailActivity.BUNDLE_PRODUCT_IMAGE, it?.artworkUrl100)
+                putExtra(ProductDetailActivity.BUNDLE_PRODUCT_NAME, it?.collectionName)
+                putExtra(ProductDetailActivity.BUNDLE_PRODUCT_PRICE, it?.collectionPrice)
+                putExtra(ProductDetailActivity.BUNDLE_PRODUCT_RELEASE_DATE, it?.releaseDate)
+            }
         })
     }
 
@@ -57,25 +54,6 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
             buttonBooks.setOnClickListener {
                 filterProduct(MediaType.BOOKS)
             }
-            editTextSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun afterTextChanged(edt: Editable?) {
-                    edt?.let {
-                        if (it.length >= 2) {
-                            productViewModel.getProducts(
-                                it.toString(),
-                                LIST_ITEM_COUNT,
-                                selectedMediaType.get
-                            )
-                        }
-                    }
-                }
-            })
         }
     }
 
