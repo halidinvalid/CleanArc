@@ -93,7 +93,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
             productViewModel.getProducts(
                 term = filterText,
                 limit = LIST_ITEM_COUNT,
-                mediaType.get
+                media = mediaType.get
             )
             selectedMediaType = mediaType
         }
