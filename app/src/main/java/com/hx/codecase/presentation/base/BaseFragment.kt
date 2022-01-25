@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -19,9 +18,6 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
     protected val binding get() = viewBinding!!
     open lateinit var actionBar: ActionBar
     open val uiNavigation = UiNavigation.BACK
-
-    @LayoutRes
-    protected abstract fun getLayoutRes(): Int
 
     override fun onCreateView(
         inflater: LayoutInflater,

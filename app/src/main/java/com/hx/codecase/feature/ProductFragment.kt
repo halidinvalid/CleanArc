@@ -3,7 +3,6 @@ package com.hx.codecase.feature
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import com.hx.codecase.R
 import com.hx.codecase.databinding.FragmentProductBinding
 import com.hx.codecase.domain.model.ProductItem
 import com.hx.codecase.presentation.base.BaseFragment
@@ -30,8 +29,6 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
             }
         })
     }
-
-    override fun getLayoutRes() = R.layout.fragment_product
 
     override fun initView() {
         super.initView()

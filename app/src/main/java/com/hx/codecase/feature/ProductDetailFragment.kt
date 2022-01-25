@@ -1,7 +1,6 @@
 package com.hx.codecase.feature
 
 import android.os.Bundle
-import com.hx.codecase.R
 import com.hx.codecase.databinding.FragmentProductDetailBinding
 import com.hx.codecase.presentation.base.BaseFragment
 import com.hx.codecase.presentation.extension.formatDate
@@ -17,8 +16,6 @@ class ProductDetailFragment :
     private var productReleaseDate: String? = null
 
     override val uiNavigation = UiNavigation.BACK
-
-    override fun getLayoutRes(): Int = R.layout.fragment_product_detail
 
     override fun initView() {
         super.initView()
