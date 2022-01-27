@@ -74,7 +74,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>(FragmentProductBind
                 }
             },
             fail = {
-                Toast.makeText(context, it?.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
             }
         )
     }

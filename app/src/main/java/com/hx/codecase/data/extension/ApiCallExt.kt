@@ -1,46 +1,25 @@
 package com.hx.codecase.data.extension
 
 import com.hx.codecase.presentation.entities.DataHolder
-import com.hx.codecase.presentation.entities.Error
-import com.hx.codecase.presentation.entities.Status
-import retrofit2.HttpException
-import java.io.IOException
-import java.net.HttpURLConnection
+import retrofit2.Response
 
 suspend fun <T> apiCall(
-    apiCallResponse: (suspend () -> T?)
+    apiCallResponse: suspend () -> Response<T>
 ): DataHolder<T> {
-    return try {
-        val response = apiCallResponse.invoke()
-        if (response == null) {
-            DataHolder(
-                responseType = Status.ERROR,
-                error = Error("Unknown Error!")
-            )
+    try {
+        val apiCallRes = apiCallResponse()
+        if (apiCallRes.isSuccessful) {
+            val body = apiCallRes.body()
+            body?.let {
+                return DataHolder.Success(it)
+            }
+            return DataHolder.Error("Api call failed ${apiCallRes.code()} ${apiCallRes.message()}")
         } else {
-            DataHolder(
-                responseType = Status.SUCCESSFUL,
-                data = response
-            )
+            return DataHolder.Error("Api call failed ${apiCallRes.code()} ${apiCallRes.message()}")
         }
     } catch (throwable: Throwable) {
-        val errorMessage = when (throwable) {
-            is IOException -> "Unable to resolve host"
-            is HttpException -> {
-                when (throwable.code()) {
-                    HttpURLConnection.HTTP_NOT_FOUND -> "Http 404 (Not Found)"
-                    HttpURLConnection.HTTP_FORBIDDEN -> "Http 403 (Forbidden)"
-                    HttpURLConnection.HTTP_UNAVAILABLE -> "HTTP 503 (Service Unavailable)"
-                    else -> "Unknown Error"
-                }
-            }
-            else -> throwable.message
-        }
-        DataHolder(
-            responseType = Status.ERROR,
-            error = Error(
-                errorMessage
-            )
-        )
+        return DataHolder.Error("Api call failed ${throwable.message ?: throwable.toString()}")
     }
 }
+
+
